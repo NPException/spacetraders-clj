@@ -4,9 +4,10 @@
 
 (def ^:private base-url "https://api.spacetraders.io")
 
-(defn build-url
+(defn ^:private build-url
   [& parts]
-  (.toString ^StringBuilder
+  (.toString
+    ^StringBuilder
     (reduce
       (fn [^StringBuilder sb ^Object x]
         (.append sb (if (nil? x) "nil" (.toString x))))
@@ -76,13 +77,13 @@
 
 
 ;; endpoints with /types/
+;; note: the return values of these endpoints don't usually change, and can be memoized if desired.
 
-(def available-loans
-  (memoize
-    (fn [token]
-      (u/json-request {:method :get
-                       :url (build-url "/types/loans")
-                       :query-params {:token token}}))))
+(defn available-loans
+  [token]
+  (u/json-request {:method :get
+                   :url (build-url "/types/loans")
+                   :query-params {:token token}}))
 
 
 ;; endpoints with /users/
