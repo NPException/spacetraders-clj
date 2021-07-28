@@ -24,8 +24,9 @@
       {:ssl-configurer ssl-configurer})))
 
 
-(defn ^:private http-request
+(defn http-request
   [request]
+  ;; TODO: handle rate limiting
   @(http/request (assoc request :client (force client))))
 
 
