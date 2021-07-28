@@ -37,6 +37,13 @@
       (json/read-str :key-fn keyword)))
 
 
+(defn json-request
+  "Does a request which expects a json response"
+  [request]
+  (-> (http-request request)
+      (parse-json-body)))
+
+
 (defn percent-encode
   [s]
   (-> (codec/url-encode s)

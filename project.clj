@@ -5,6 +5,7 @@
                  [com.github.ben-manes.caffeine/caffeine "3.0.3"]
                  [ring/ring-codec "1.1.2"]
                  [http-kit "2.5.3"]]
+  :global-vars {*warn-on-reflection* true}
   :repl-options {:init-ns de.npcomplete.spacetraders-wrapper.core}
   :source-paths ["src"]
   :target-path "target/%s"
