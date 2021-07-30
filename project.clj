@@ -1,4 +1,4 @@
-(defproject de.npcomplete/spacetraders-clj-wrapper "0.1.0-SNAPSHOT"
+(defproject de.npexception/spacetraders-clj-wrapper "0.1.0-SNAPSHOT"
   :license "MIT License"
   :dependencies [[org.clojure/clojure "1.10.2"]
                  [org.clojure/data.json "2.4.0"]
