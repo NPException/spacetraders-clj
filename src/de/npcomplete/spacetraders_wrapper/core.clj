@@ -125,14 +125,15 @@
 
 (defn locations
   "Get location info for a system"
-  [token system]
+  [token system & [type]]
   (u/json-request {:method :get
                    :url (build-url "/systems/" system "/locations")
-                   :query-params {:token token}}))
+                   :query-params {:token token
+                                  :type (some-> type (name) (str/upper-case))}}))
 
 
 (defn ship-listings
-  "Get a list of all ships available to buy in the system."
+  "Get a list of all ships available to buy in the system"
   [token system & [class]]
   (u/json-request {:method :get
                    :url (build-url "/systems/" system "/ship-listings")
