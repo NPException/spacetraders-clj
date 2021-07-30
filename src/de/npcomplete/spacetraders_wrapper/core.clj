@@ -107,12 +107,45 @@
 
 ;; endpoints with /systems/
 
+(defn system-info
+  "Get systems info"
+  [token system]
+  (u/json-request {:method :get
+                   :url (build-url "/systems/" system)
+                   :query-params {:token token}}))
+
+
+(defn flight-plans
+  "Get all active flight plans in the system"
+  [token system]
+  (u/json-request {:method :get
+                   :url (build-url "/systems/" system "/flight-plans")
+                   :query-params {:token token}}))
+
+
+(defn locations
+  "Get location info for a system"
+  [token system]
+  (u/json-request {:method :get
+                   :url (build-url "/systems/" system "/locations")
+                   :query-params {:token token}}))
+
+
 (defn ship-listings
-  [token system class]
+  "Get a list of all ships available to buy in the system."
+  [token system & [class]]
   (u/json-request {:method :get
                    :url (build-url "/systems/" system "/ship-listings")
                    :query-params {:token token
                                   :class class}}))
+
+
+(defn docked-ships
+  "Get info on a system's docked ships"
+  [token system]
+  (u/json-request {:method :get
+                   :url (build-url "/systems/" system "/ships")
+                   :query-params {:token token}}))
 
 
 ;; endpoints with /types/
