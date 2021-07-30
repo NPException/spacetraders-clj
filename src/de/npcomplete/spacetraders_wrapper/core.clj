@@ -27,7 +27,7 @@
 
 ;; endpoints with /my/
 
-(defn account-info
+(defn my-account
   [token]
   (u/json-request {:method :get
                    :url (build-url "/my/account")
