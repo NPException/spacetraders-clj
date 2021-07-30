@@ -33,14 +33,14 @@
                    :query-params {:token token}}))
 
 
-(defn marketplace
+(defn location-marketplace
   [token location]
   (u/json-request {:method :get
                    :url (build-url "/locations/" location "/marketplace")
                    :query-params {:token token}}))
 
 
-(defn ships-at-location
+(defn location-ships
   [token location]
   (u/json-request {:method :get
                    :url (build-url "/locations/" location "/ships")
@@ -53,6 +53,22 @@
   [token]
   (u/json-request {:method :get
                    :url (build-url "/my/account")
+                   :query-params {:token token}}))
+
+
+(defn create-flight-plan!
+  [token ship-id destination]
+  (u/json-request {:method :post
+                   :url (build-url "/my/flight-plans")
+                   :query-params {:token token}
+                   :form-params {:shipId ship-id
+                                 :destination destination}}))
+
+
+(defn my-flight-plan-info
+  [token flight-plan-id]
+  (u/json-request {:method :get
+                   :url (build-url "/my/flight-plans/" flight-plan-id)
                    :query-params {:token token}}))
 
 
@@ -98,7 +114,7 @@
                    :query-params {:token token}}))
 
 
-(defn ship-info
+(defn my-ship-info
   [token ship-id]
   (u/json-request {:method :get
                    :url (build-url "/my/ships/" ship-id)
@@ -115,7 +131,7 @@
                    :query-params {:token token}}))
 
 
-(defn flight-plans
+(defn system-flight-plans
   "Get all active flight plans in the system"
   [token system]
   (u/json-request {:method :get
@@ -123,7 +139,7 @@
                    :query-params {:token token}}))
 
 
-(defn locations
+(defn system-locations
   "Get location info for a system"
   [token system & [type]]
   (u/json-request {:method :get
@@ -132,7 +148,7 @@
                                   :type (some-> type (name) (str/upper-case))}}))
 
 
-(defn ship-listings
+(defn system-ship-listings
   "Get a list of all ships available to buy in the system"
   [token system & [class]]
   (u/json-request {:method :get
@@ -141,7 +157,7 @@
                                   :class class}}))
 
 
-(defn docked-ships
+(defn system-docked-ships
   "Get info on a system's docked ships"
   [token system]
   (u/json-request {:method :get
