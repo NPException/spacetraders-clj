@@ -2,6 +2,8 @@
   (:require [de.npcomplete.spacetraders-wrapper.util :as u]
             [clojure.string :as str]))
 
+;; Compatible with Space Traders API version 1.0.0
+
 (def ^:private base-url "https://api.spacetraders.io")
 
 (defn ^:private build-url
@@ -23,6 +25,26 @@
 
 
 ;; endpoints with /locations/
+
+(defn location-info
+  [token location]
+  (u/json-request {:method :get
+                   :url (build-url "/locations/" location)
+                   :query-params {:token token}}))
+
+
+(defn marketplace
+  [token location]
+  (u/json-request {:method :get
+                   :url (build-url "/locations/" location "/marketplace")
+                   :query-params {:token token}}))
+
+
+(defn ships-at-location
+  [token location]
+  (u/json-request {:method :get
+                   :url (build-url "/locations/" location "/ships")
+                   :query-params {:token token}}))
 
 
 ;; endpoints with /my/
@@ -61,11 +83,11 @@
 
 
 (defn buy-ship!
-  [token location-id ship-type]
+  [token location ship-type]
   (u/json-request {:method :post
                    :url (build-url "/my/ships")
                    :query-params {:token token}
-                   :form-params {:location location-id
+                   :form-params {:location location
                                  :type ship-type}}))
 
 
@@ -86,11 +108,11 @@
 ;; endpoints with /systems/
 
 (defn ship-listings
-  [token system-id ship-class]
+  [token system class]
   (u/json-request {:method :get
-                   :url (build-url "/systems/" system-id "/ship-listings")
+                   :url (build-url "/systems/" system "/ship-listings")
                    :query-params {:token token
-                                  :class ship-class}}))
+                                  :class class}}))
 
 
 ;; endpoints with /types/
