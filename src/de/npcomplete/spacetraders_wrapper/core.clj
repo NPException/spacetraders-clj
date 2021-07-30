@@ -72,12 +72,29 @@
                    :query-params {:token token}}))
 
 
+(defn my-loans
+  "Get your loans"
+  [token]
+  (u/json-request {:method :get
+                   :url (build-url "/my/loans")
+                   :query-params {:token token}}))
+
+
 (defn take-out-loan!
+  "Take out a loan"
   [token loan-type]
   (u/json-request {:method :post
                    :url (build-url "/my/loans")
                    :query-params {:token token}
                    :form-params {:type (str/upper-case (name loan-type))}}))
+
+
+(defn pay-off-loan!
+  "Pay off your loan"
+  [token loan-id]
+  (u/json-request {:method :put
+                   :url (build-url "/my/loans/" loan-id)
+                   :query-params {:token token}}))
 
 
 (defn ^:private place-order!
