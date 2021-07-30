@@ -69,6 +69,20 @@
                                  :type ship-type}}))
 
 
+(defn my-ships
+  [token]
+  (u/json-request {:method :get
+                   :url (build-url "/my/ships")
+                   :query-params {:token token}}))
+
+
+(defn ship-info
+  [token ship-id]
+  (u/json-request {:method :get
+                   :url (build-url "/my/ships/" ship-id)
+                   :query-params {:token token}}))
+
+
 ;; endpoints with /systems/
 
 (defn ship-listings
