@@ -42,19 +42,22 @@
                    :form-params {:type (str/upper-case (name loan-type))}}))
 
 
-(defn place-order!
+(defn ^:private place-order!
   [token order-type ship-id good quantity]
-  (if-not (#{:buy :sell} order-type)
-    {:error {:message (str "Order type must be :buy or :sell. Was " (prn-str order-type)), :code -1}}
-    (let [endpoint (if (= :buy order-type)
-                     "/my/purchase-orders"
-                     "/my/sell-orders")]
-      (u/json-request {:method :post
-                       :url (build-url endpoint)
-                       :query-params {:token token}
-                       :form-params {:shipId ship-id
-                                     :good (str/upper-case (name good))
-                                     :quantity quantity}}))))
+  (u/json-request {:method :post
+                   :url (build-url (case order-type
+                                     :buy "/my/purchase-orders"
+                                     :sell "/my/sell-orders"))
+                   :query-params {:token token}
+                   :form-params {:shipId ship-id
+                                 :good (str/upper-case (name good))
+                                 :quantity quantity}}))
+
+(defn buy-goods! [token ship-id good quantity]
+  (place-order! token :buy ship-id good quantity))
+
+(defn sell-goods! [token ship-id good quantity]
+  (place-order! token :sell ship-id good quantity))
 
 
 (defn buy-ship!
