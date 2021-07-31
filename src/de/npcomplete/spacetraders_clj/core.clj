@@ -16,6 +16,7 @@
       (StringBuilder. ^String base-url)
       parts)))
 
+
 ;; endpoints with /game/
 
 (defn game-status
@@ -135,6 +136,7 @@
 
 
 (defn buy-ship!
+  "Buy a new ship"
   [token location ship-type]
   (u/json-request {:method :post
                    :url (build-url "/my/ships")
@@ -143,7 +145,16 @@
                                  :type ship-type}}))
 
 
+(defn sell-ship!
+  "Scrap your ship for credits"
+  [token ship-id]
+  (u/json-request {:method :delete
+                   :url (build-url "/my/ships/" ship-id)
+                   :query-params {:token token}}))
+
+
 (defn my-ships
+  "Get your ships"
   [token]
   (u/json-request {:method :get
                    :url (build-url "/my/ships")
@@ -151,10 +162,32 @@
 
 
 (defn my-ship-info
+  "Get your ship info"
   [token ship-id]
   (u/json-request {:method :get
                    :url (build-url "/my/ships/" ship-id)
                    :query-params {:token token}}))
+
+
+(defn jettison-cargo!
+  "Jettison cargo"
+  [token ship-id good quantity]
+  (u/json-request {:method :post
+                   :url (build-url "/my/ships/" ship-id "/jettison")
+                   :query-params {:token token}
+                   :form-params {:good (str/upper-case (name good))
+                                 :quantity quantity}}))
+
+
+(defn transfer-cargo!
+  "Transfer cargo between ships"
+  [token from-ship-id to-ship-id good quantity]
+  (u/json-request {:method :post
+                   :url (build-url "/my/ships/" from-ship-id "/transfer")
+                   :query-params {:token token}
+                   :form-params {:toShipId to-ship-id
+                                 :good (str/upper-case (name good))
+                                 :quantity quantity}}))
 
 
 ;; endpoints with /systems/
