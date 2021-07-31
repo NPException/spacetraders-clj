@@ -1,4 +1,6 @@
 (defproject de.npexception/spacetraders-clj "0.1.0-SNAPSHOT"
+  :description "A thin wrapper around the API of https://spacetraders.io/"
+  :url "https://github.com/NPException/spacetraders-clj"
   :license "MIT License"
   :dependencies [[org.clojure/clojure "1.10.2"]
                  [org.clojure/data.json "2.4.0"]
