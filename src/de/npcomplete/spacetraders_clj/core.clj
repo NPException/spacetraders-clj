@@ -237,10 +237,35 @@
 ;; endpoints with /types/
 ;; note: the return values of these endpoints don't usually change, and can be memoized if desired.
 
+(defn available-goods
+  "Get available goods"
+  [token]
+  (u/json-request {:method :get
+                   :url (build-url "/types/goods")
+                   :query-params {:token token}}))
+
+
 (defn available-loans
+  "Get available loans"
   [token]
   (u/json-request {:method :get
                    :url (build-url "/types/loans")
+                   :query-params {:token token}}))
+
+
+(defn available-ships
+  "Get info on available ships"
+  [token]
+  (u/json-request {:method :get
+                   :url (build-url "/types/ships")
+                   :query-params {:token token}}))
+
+
+(defn available-structures
+  "Get available structures"
+  [token]
+  (u/json-request {:method :get
+                   :url (build-url "/types/structures")
                    :query-params {:token token}}))
 
 
