@@ -19,6 +19,7 @@
 ;; endpoints with /game/
 
 (defn game-status
+  "Use to determine whether the server is alive"
   []
   (u/json-request {:method :get
                    :url (build-url "/game/status")}))
@@ -35,6 +36,7 @@
 ;; endpoints with /locations/
 
 (defn location-info
+  "Get info on a location"
   [token location]
   (u/json-request {:method :get
                    :url (build-url "/locations/" location)
@@ -42,6 +44,7 @@
 
 
 (defn location-marketplace
+  "Get info on a location's marketplace"
   [token location]
   (u/json-request {:method :get
                    :url (build-url "/locations/" location "/marketplace")
@@ -49,6 +52,7 @@
 
 
 (defn location-ships
+  "Get the ships at a location"
   [token location]
   (u/json-request {:method :get
                    :url (build-url "/locations/" location "/ships")
@@ -58,6 +62,7 @@
 ;; endpoints with /my/
 
 (defn my-account
+  "Get information on your account"
   [token]
   (u/json-request {:method :get
                    :url (build-url "/my/account")
@@ -65,6 +70,7 @@
 
 
 (defn create-flight-plan!
+  "Submit a new flight plan"
   [token ship-id destination]
   (u/json-request {:method :post
                    :url (build-url "/my/flight-plans")
@@ -74,6 +80,7 @@
 
 
 (defn my-flight-plan-info
+  "Get info on an existing flight plan"
   [token flight-plan-id]
   (u/json-request {:method :get
                    :url (build-url "/my/flight-plans/" flight-plan-id)
