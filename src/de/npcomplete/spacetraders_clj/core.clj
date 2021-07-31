@@ -105,22 +105,26 @@
                    :query-params {:token token}}))
 
 
-(defn ^:private place-order!
-  [token order-type ship-id good quantity]
+(defn place-purchase-order!
+  "Place a new purchase order"
+  [token ship-id good quantity]
   (u/json-request {:method :post
-                   :url (build-url (case order-type
-                                     :buy "/my/purchase-orders"
-                                     :sell "/my/sell-orders"))
+                   :url (build-url "/my/purchase-orders")
                    :query-params {:token token}
                    :form-params {:shipId ship-id
                                  :good (str/upper-case (name good))
                                  :quantity quantity}}))
 
-(defn buy-goods! [token ship-id good quantity]
-  (place-order! token :buy ship-id good quantity))
 
-(defn sell-goods! [token ship-id good quantity]
-  (place-order! token :sell ship-id good quantity))
+(defn place-sell-order!
+  "Place a new sell order"
+  [token ship-id good quantity]
+  (u/json-request {:method :post
+                   :url (build-url "/my/sell-orders")
+                   :query-params {:token token}
+                   :form-params {:shipId ship-id
+                                 :good (str/upper-case (name good))
+                                 :quantity quantity}}))
 
 
 (defn buy-ship!
