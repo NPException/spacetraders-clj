@@ -2,6 +2,10 @@
   (:require [de.npcomplete.spacetraders-clj.util :as u]
             [clojure.string :as str]))
 
+;; TODO: instead of just ids, let functions accept maps as well where sensible
+;;       Example: instead of passing a "location symbol" to `buy-ship!`, also
+;;                allow passing a location map as it is returned from `system-locations`.
+
 ;; Compatible with Space Traders API version 1.0.0
 
 (def ^:private base-url "https://api.spacetraders.io")
@@ -57,6 +61,14 @@
   [token location]
   (u/json-request {:method :get
                    :url (build-url "/locations/" location "/ships")
+                   :query-params {:token token}}))
+
+
+(defn location-structures
+  "Get the structures at a location"
+  [token location]
+  (u/json-request {:method :get
+                   :url (build-url "/locations/" location "/structures")
                    :query-params {:token token}}))
 
 
@@ -190,6 +202,55 @@
                                  :quantity quantity}}))
 
 
+(defn my-structures
+  "Use to see all of your structures"
+  [token]
+  (u/json-request {:method :get
+                   :url (build-url "/my/structures/")
+                   :query-params {:token token}}))
+
+
+(defn create-structure!
+  "Create a new structure"
+  [token location type]
+  (u/json-request {:method :post
+                   :url (build-url "/my/structures")
+                   :query-params {:token token}
+                   :form-params {:location location
+                                 :type (str/upper-case (name type))}}))
+
+
+(defn my-structure-info
+  "Use to see a specific structure you own"
+  [token structure-id]
+  (u/json-request {:method :get
+                   :url (build-url "/my/structures/" structure-id)
+                   :query-params {:token token}}))
+
+
+;; TODO: check if the non-my deposit function works for own structures too (aka: is this function redundant?)
+(defn deposit-goods-to-owned-structure!
+  "Deposit goods to a structure you own"
+  [token structure-id ship-id good quantity]
+  (u/json-request {:method :post
+                   :url (build-url "/my/structures/" structure-id "/deposit")
+                   :query-params {:token token}
+                   :form-params {:shipId ship-id
+                                 :good (str/upper-case (name good))
+                                 :quantity quantity}}))
+
+
+(defn take-goods!
+  "Transfer goods from your structure to a ship"
+  [token structure-id ship-id good quantity]
+  (u/json-request {:method :post
+                   :url (build-url "/my/structures/" structure-id "/transfer")
+                   :query-params {:token token}
+                   :form-params {:shipId ship-id
+                                 :good (str/upper-case (name good))
+                                 :quantity quantity}}))
+
+
 (defn warp-jump!
   "Attempt a warp jump"
   [token ship-id]
@@ -197,6 +258,27 @@
                    :url (build-url "/my/warp-jumps")
                    :query-params {:token token}
                    :form-params {:shipId ship-id}}))
+
+
+;; endpoints with /structures/
+
+(defn structure-info
+  "See specific structure (ship must be docked at same location?)"
+  [token structure-id]
+  (u/json-request {:method :get
+                   :url (build-url "/structures/" structure-id)
+                   :query-params {:token token}}))
+
+
+(defn deposit-goods!
+  "Deposit goods to a structure"
+  [token structure-id ship-id good quantity]
+  (u/json-request {:method :post
+                   :url (build-url "/structures/" structure-id "/deposit")
+                   :query-params {:token token}
+                   :form-params {:shipId ship-id
+                                 :good (str/upper-case (name good))
+                                 :quantity quantity}}))
 
 
 ;; endpoints with /systems/
