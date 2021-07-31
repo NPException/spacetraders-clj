@@ -190,6 +190,15 @@
                                  :quantity quantity}}))
 
 
+(defn warp-jump!
+  "Attempt a warp jump"
+  [token ship-id]
+  (u/json-request {:method :post
+                   :url (build-url "/my/warp-jumps")
+                   :query-params {:token token}
+                   :form-params {:shipId ship-id}}))
+
+
 ;; endpoints with /systems/
 
 (defn system-info
@@ -272,6 +281,7 @@
 ;; endpoints with /users/
 
 (defn claim-username!
+  "Claim a username and get a token"
   [name]
   (u/json-request {:method :post
                    :url (build-url "/users/" (u/percent-encode name) "/claim")}))
