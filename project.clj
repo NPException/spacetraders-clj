@@ -1,4 +1,4 @@
-(defproject de.npexception/spacetraders-clj "0.1.0-SNAPSHOT"
+(defproject de.npexception/spacetraders-clj "1.0.0-SNAPSHOT"
   :description "A thin wrapper around the API of https://spacetraders.io/"
   :url "https://github.com/NPException/spacetraders-clj"
   :license "MIT License"
