@@ -1,4 +1,4 @@
-(ns de.npcomplete.spacetraders-wrapper.util
+(ns de.npcomplete.spacetraders-clj.util
   (:require [clojure.string :as str]
             [clojure.data.json :as json]
             [ring.util.codec :as codec]

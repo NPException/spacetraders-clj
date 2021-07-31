@@ -1,8 +1,8 @@
-(ns de.npcomplete.spacetraders-wrapper.core-with-token
+(ns de.npcomplete.spacetraders-clj.core-with-token
   "This namespace is a convenience version of the core ns, where
   all functions which take the token as their first argument will instead
   take it from an environment variable."
-  (:require [de.npcomplete.spacetraders-wrapper.core]))
+  (:require [de.npcomplete.spacetraders-clj.core]))
 
 (def ^:private token (delay (System/getenv "SPACE_TRADERS_TOKEN")))
 
@@ -19,7 +19,7 @@
 
 (defn ^:private find-candidates
   []
-  (->> (ns-publics 'de.npcomplete.spacetraders-wrapper.core)
+  (->> (ns-publics 'de.npcomplete.spacetraders-clj.core)
        (map val)
        (filter (comp :arglists meta))                       ;; find functions
        (group-by auth-type)))

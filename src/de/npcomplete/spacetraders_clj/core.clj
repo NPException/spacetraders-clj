@@ -1,5 +1,5 @@
-(ns de.npcomplete.spacetraders-wrapper.core
-  (:require [de.npcomplete.spacetraders-wrapper.util :as u]
+(ns de.npcomplete.spacetraders-clj.core
+  (:require [de.npcomplete.spacetraders-clj.util :as u]
             [clojure.string :as str]))
 
 ;; Compatible with Space Traders API version 1.0.0
