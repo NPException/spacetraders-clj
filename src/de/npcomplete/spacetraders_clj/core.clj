@@ -24,6 +24,14 @@
                    :url (build-url "/game/status")}))
 
 
+(defn leaderboard
+  "Use to see the current net worth of the top players"
+  [token]
+  (u/json-request {:method :get
+                   :url (build-url "/game/leaderboard/net-worth")
+                   :query-params {:token token}}))
+
+
 ;; endpoints with /locations/
 
 (defn location-info
