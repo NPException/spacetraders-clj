@@ -1,10 +1,9 @@
-(defproject de.npexception/spacetraders-clj "1.1.1-SNAPSHOT"
+(defproject de.npexception/spacetraders-clj "1.2.0-SNAPSHOT"
   :description "A thin wrapper around the API of https://spacetraders.io/"
   :url "https://github.com/NPException/spacetraders-clj"
   :license "MIT License"
   :plugins [[lein-pprint "1.3.2"]]
-  :dependencies [[org.clojure/clojure "1.10.2"]
-                 [org.clojure/data.json "2.4.0"]
+  :dependencies [[org.clojure/data.json "2.4.0"]
                  #_[org.clojure/core.async "1.2.603"]
                  [com.github.ben-manes.caffeine/caffeine "3.0.3"]
                  [ring/ring-codec "1.1.2"]
@@ -13,8 +12,13 @@
   :repl-options {:init-ns de.npcomplete.spacetraders-clj.core}
   :source-paths ["src"]
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}}
-  :release-tasks [["vcs" "assert-committed"]
+  :profiles {:generate-ns {:source-paths ["dev"]
+                           :main token-ns-creator}
+             :dev {:source-paths ["dev"]}
+             :provided {:dependencies [[org.clojure/clojure "1.10.2"]]}}
+  :aliases {"generate-ns" ["with-profile" "generate-ns" "run"]}
+  :release-tasks [["generate-ns"]
+                  ["vcs" "assert-committed"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
                   ["vcs" "commit" "prepare release v%s"]
                   ["vcs" "tag" "v" "--no-sign"]
