@@ -24,10 +24,33 @@
       {:ssl-configurer ssl-configurer})))
 
 
+(defn ^:private wait-for-it!
+  [response response-time]
+  (let [sleep-time (-> response :headers :retry-after
+                       (Double/parseDouble) (* 1000) (long)
+                       ;; subtract estimated one-way ping
+                       (- (quot response-time 2)))]
+    (when (pos? sleep-time)
+      (Thread/sleep sleep-time))))
+
+
+(defn ^:private make-request!
+  [request]
+  (let [start (System/currentTimeMillis)
+        response @(http/request request)
+        time (- (System/currentTimeMillis) start)]
+    [response time]))
+
+
 (defn http-request
   [request]
-  ;; TODO: handle rate limiting
-  @(http/request (assoc request :client (force client))))
+  (let [request (assoc request :client (force client))]
+    (locking http-request
+      (loop [[response time] (make-request! request)]
+        (if-not (= 429 (:status response))
+          response
+          (do (wait-for-it! response time)
+              (recur (make-request! request))))))))
 
 
 (defn parse-json-body
