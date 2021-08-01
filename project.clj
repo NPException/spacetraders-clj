@@ -20,7 +20,7 @@
                   ["vcs" "tag" "v" "--no-sign"]
                   ["deploy"]
                   ["change" "version" "leiningen.release/bump-version"]
-                  ["vcs" "commit"]]
+                  ["vcs" "commit" "prepare v%s"]]
   :deploy-repositories [["clojars" {:url "https://repo.clojars.org"
                                     :username :env/clojars_username
                                     :password :env/clojars_password
