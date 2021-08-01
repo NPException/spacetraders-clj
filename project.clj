@@ -9,7 +9,7 @@
                  [ring/ring-codec "1.1.2"]
                  [http-kit "2.5.3"]]
   :global-vars {*warn-on-reflection* true}
-  :repl-options {:init-ns de.npcomplete.spacetraders-clj.core}
+  :repl-options {:init-ns de.npexception.spacetraders-clj.core}
   :source-paths ["src"]
   :target-path "target/%s"
   :profiles {:generate-ns {:source-paths ["dev"]

@@ -1,5 +1,5 @@
-(ns de.npcomplete.spacetraders-clj.core
-  (:require [de.npcomplete.spacetraders-clj.web :as web]
+(ns de.npexception.spacetraders-clj.core
+  (:require [de.npexception.spacetraders-clj.web :as web]
             [clojure.string :as str]))
 
 ;; Compatible with Space Traders API version 1.0.0

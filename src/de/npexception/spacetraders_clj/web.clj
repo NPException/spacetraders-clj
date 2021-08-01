@@ -1,4 +1,4 @@
-(ns de.npcomplete.spacetraders-clj.web
+(ns de.npexception.spacetraders-clj.web
   (:require [clojure.string :as str]
             [clojure.data.json :as json]
             [ring.util.codec :as codec]
