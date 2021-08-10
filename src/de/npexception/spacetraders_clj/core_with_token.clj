@@ -142,6 +142,11 @@
   [ship]
   (apply core/sell-ship! @token ship []))
 
+(defn star-systems
+  "Use to get basic info about star systems in the game"
+  []
+  (apply core/star-systems @token []))
+
 (defn structure-info
   "See specific structure (ship must be docked at same location?)"
   [structure]

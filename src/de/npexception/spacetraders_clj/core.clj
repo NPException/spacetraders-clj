@@ -66,6 +66,14 @@
                      :url (build-url "/game/status")}))
 
 
+(defn star-systems
+  "Use to get basic info about star systems in the game"
+  [token]
+  (web/json-request {:method :get
+                     :url (build-url "/game/systems")
+                     :query-params {:token token}}))
+
+
 (defn leaderboard
   "Use to see the current net worth of the top players"
   [token]
